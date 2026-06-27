@@ -1,160 +1,142 @@
 # PRD: 혼밥하는 사람들을 위한 듀오밥
 
-## 1. Product Overview
-- **One-liner**: A platform that creates a community for people who eat alone to share information and arrange blind dates.
-- **Mission**: To provide a space for communication for those who eat alone, facilitating information sharing and the creation of new connections.
-- **Differentiation Points**: Strengthening connections between users through personalized food recommendations and blind date features for those who enjoy eating alone.
-- **Personas**:
-  1. Office workers who enjoy eating alone (30s, prefer dining alone)
-  2. College students looking for casual relationships (20s, desire to meet new people)
-  3. Lonely individuals wanting to try eating alone (40s, seeking new experiences)
-- **Usage Scenarios**:
-  1. Users find suitable foods for solo dining through the food recommendation system and share them with other users.
-  2. Users arrange meetings with interested individuals through the blind date feature.
+> 📌 Device: **Web (browser)** · 🧠 Coding IDE: **Claude Code**
 
-## 2. Out of Scope
-- Integration with external payment systems is excluded from the MVP scope.
-- Direct messaging functionality between users is not included.
+> Cubivora Spec-First PRD (auto-generated). Treat this document as the single source of truth during implementation.
 
-## 3. Target Users
-- **People who enjoy eating alone**: 
-  - **Occupation/Age/Context**: Office workers, 30s, prefer dining alone.
-  - **Pain**: Eating alone feels lonely, and finding good food is difficult.
-  - **Gain**: Seeking new experiences through food recommendations and connections with others.
-  - **Trigger**: When wanting to try new foods.
-  
-- **People looking for casual relationships**: 
-  - **Occupation/Age/Context**: College students, 20s, desire to meet new people.
-  - **Pain**: Feel there are few opportunities for blind dates and find it hard to meet people.
-  - **Gain**: Want to expand social relationships through meetings with new individuals.
-  - **Trigger**: When inspired by a friend's blind date experience.
+## 1. One-liner
 
-- **People wanting to try eating alone**: 
-  - **Occupation/Age/Context**: Lonely middle-aged individuals, 40s, seeking new experiences.
-  - **Pain**: Fear of dining alone.
-  - **Gain**: Desire for an environment where they can comfortably eat alone.
-  - **Trigger**: When wanting to become accustomed to dining alone.
+혼밥하는 사람들을 만의 커뮤니티를 만들어서 정보를 공유하고 소개팅도 진행하는 플랫폼
 
-## 4. Features
+## 2. Out of scope
 
-| id          | Name                | Priority | One-liner Description                             | Core User Story                       | Core Acceptance                        | Screen Ref                  |
-|-------------|---------------------|----------|--------------------------------------------------|---------------------------------------|----------------------------------------|-----------------------------|
-| feat-72b70b | Food Recommendation System | must     | Personalized food recommendation feature          | Users receive recommendations based on their preferred foods | Accuracy of recommended foods is over 80% | /screen-72b70b             |
-| feat-72b70b | Blind Date Feature   | must     | Matching feature for users to arrange blind dates | Users are matched with individuals they are interested in | Conversations with matched users are over 70% positive | /screen-72b70b-2           |
-| feat-72b70b | User Profile Management | should   | Feature for editing and managing user information | Users update their profiles           | Changes are reflected immediately after profile update | /profile                    |
-| feat-72b70b | Notification Feature  | should   | Notification feature for food recommendations and blind dates | Users receive notifications for new recommendations or matches | Notifications are accurately delivered to users | /notifications              |
-| feat-72b70b | Feedback System      | could    | Feature for collecting and analyzing user feedback | Users provide feedback on recommended foods | Over 70% positive response after feedback collection | /feedback                   |
+- _(none)_
 
-## 5. Screens & Routes
 
-| route                       | Screen Name                                                   | Purpose                                   | Entry Trigger                       | Core Component          | Related Feature id      |
-|-----------------------------|--------------------------------------------------------------|------------------------------------------|-------------------------------------|-------------------------|-------------------------|
-| /screen-72b70b             | Food Recommendation System — List-Detail Type                | Layout for the food recommendation system | User clicks on the food recommendation feature | Food list, Detail view | feat-72b70b             |
-| /screen-72b70b-2           | Food Recommendation System — Seasonal Recommendations like 막걸리 and 파전 in rainy weather, or 빙수 and 화채 in summer | Seasonal recommendation screen of the food recommendation system | User clicks on seasonal recommendations | Seasonal recommendation list | feat-72b70b             |
-| /profile                    | User Profile Management                                       | Editing and managing user information    | User clicks on the profile menu    | Profile edit form      | feat-72b70b             |
-| /notifications              | Notification Feature                                          | Notifications related to food recommendations and blind dates | User clicks on the notification menu | Notification list      | feat-72b70b             |
-| /feedback                   | Feedback System                                              | Collecting and analyzing user feedback   | User clicks on the feedback menu    | Feedback submission form | feat-72b70b             |
+## 3. Target users
 
-## 6. Data Model
+- 혼밥을 즐기는 사람
+- 자만추를 원하는 사람
+- 혼밥을 도전해보고 싶은 사람
 
-### User
-| Field       | Type   | PK/FK/UNIQUE | nullable | Default | Description                       |
-|-------------|--------|--------------|----------|---------|-----------------------------------|
-| id          | string | PK           |          |         | Primary key                      |
-| status      | string |              |          |         | Lifecycle or workflow state      |
-| description | text   |              | true     |         | Human-readable summary           |
-| label       | string | UNIQUE       |          |         | Display label for UI lists       |
 
-### Food Preference
-| Field       | Type   | PK/FK/UNIQUE | nullable | Default | Description                       |
-|-------------|--------|--------------|----------|---------|-----------------------------------|
-| id          | string | PK           |          |         | Primary key                      |
-| status      | string |              |          |         | Lifecycle or workflow state      |
-| description | text   |              | true     |         | Human-readable summary           |
-| label       | string | UNIQUE       |          |         | Display label for UI lists       |
+### Target persona — depth
 
-### Recommendation History
-| Field       | Type   | PK/FK/UNIQUE | nullable | Default | Description                       |
-|-------------|--------|--------------|----------|---------|-----------------------------------|
-| id          | string | PK           |          |         | Primary key                      |
-| status      | string |              |          |         | Lifecycle or workflow state      |
-| description | text   |              | true     |         | Human-readable summary           |
-| label       | string | UNIQUE       |          |         | Display label for UI lists       |
+가벼운 만남 선호
 
-### Notification
-| Field       | Type   | PK/FK/UNIQUE | nullable | Default | Description                       |
-|-------------|--------|--------------|----------|---------|-----------------------------------|
-| id          | string | PK           |          |         | Primary key                      |
-| status      | string |              |          |         | Lifecycle or workflow state      |
-| description | text   |              | true     |         | Human-readable summary           |
-| label       | string | UNIQUE       |          |         | Display label for UI lists       |
+## 3.5 Killer differentiator
 
-### Relationship Diagram
-- User (User) ↔ Food Preference (FoodPreference): 1:N
-- User (User) ↔ Recommendation (Recommendation): 1:N
-- User (User) ↔ Notification (Notification): 1:N
+사용자 매칭 시스템
 
-## 7. Backend Contract
+## 4. Core features
 
-| method | path                     | Request Body             | Response 200                   | Error Code       | auth_scope      | Calling Screen       |
-|--------|--------------------------|--------------------------|--------------------------------|------------------|------------------|----------------------|
-| POST   | /auth/signup             | {email, password}        | {id, created_at}               | 400, 409         | guest            | /login               |
-| POST   | /auth/login              | {email, password}        | {token}                        | 401              | guest            | /login               |
-| GET    | /auth/me                |                          | {id, email, created_at}        | 401              | authenticated     | /login               |
-| POST   | /screens                 | {...}                    | {id, created_at}               | 400              | authenticated     | /screens             |
-| GET    | /screens                 |                          | [{...}]                        | 401              | authenticated     | /screens             |
-| POST   | /food-preferences        | {...}                    | {id, created_at}               | 400              | authenticated     | /screens             |
-| GET    | /food-preferences        |                          | [{...}]                        | 401              | authenticated     | /screens             |
-| POST   | /recommendations         | {...}                    | {id, created_at}               | 400              | authenticated     | /screens             |
-| GET    | /recommendations         |                          | [{...}]                        | 401              | authenticated     | /screens             |
-| POST   | /notifications           | {...}                    | {id, created_at}               | 400              | authenticated     | /screens             |
-| GET    | /notifications           |                          | [{...}]                        | 401              | authenticated     | /screens             |
+- **[MUST]** 음식 추천 시스템 — 음식 추천 시스템
+  - 🔎 Detail: 사용자 취향 설정
+  - 🔎 Detail: 추천 알고리즘 조정
+  - 🔎 Detail: 자기가 선호하는 음식 기반으로 비슷한 취향을 가진 사람과 매칭
 
-## 8. Authentication & Authorization
+## 5. Screens / URLs
 
-- **Authentication Method**: Email-based authentication
-- **Role Matrix**:
-  - User: Access to all features
-  - Admin: Access to all features (additional features may be required)
-- **Session/Token Policy**: JWT-based tokens used
+| Route | Page | Purpose |
+|-------|------|---------|
+| `/screen-72b70b` | 음식 추천 시스템 — 리스트-디테일형 | 음식 추천 시스템 기능의 화면 레이아웃 (리스트-디테일형) |
+| `/screen-72b70b-2` | 음식 추천 시스템 — 비 오면 막걸리에 파전 여름엔 빙수나 화채같이 시기에 따라 추천 | 음식 추천 시스템 기능의 화면 레이아웃 (비 오면 막걸리에 파전 여름엔 빙수나 화채같이 시기에 따라 추천) |
 
-## 9. External Integration (PG, OAuth, MCP, AI Models)
+## 5.5 Per-feature screens
 
-| Integration Type | Purpose                       | Environment Variable         | Callback Path                     | Failure Fallback               |
-|------------------|-------------------------------|------------------------------|-----------------------------------|--------------------------------|
-| MCP              | Kakao Talk, Naver Maps        | [TBD: Required environment variables] | /service-connection/auth/callback/{provider} | Send error message to user |
+### 🧩 Screens for the “음식 추천 시스템” feature
+- 리스트-디테일형
+- 비 오면 막걸리에 파전 여름엔 빙수나 화채같이 시기에 따라 추천
 
-## 10. Monetization & Analytics
+## 6. Data model
 
-- **Pricing**: Free (providing basic features), generating revenue through affiliate marketing
-- **Payment Timing**: Consider monetization when introducing additional features
-- **Refund Policy**: None (free service)
-- **Key KPIs**:
-  1. Over 1,000 active users per month
-  2. Food recommendation accuracy over 80%
-  3. User feedback positivity rate over 70%
+### 사용자
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string | ✓ | Primary key |
+| status | string | ✓ | Lifecycle or workflow state |
+| description | text |  | Human-readable summary |
+| label | string | ✓ | Display label for UI lists |
 
-## 11. Acceptance Criteria
+### 음식 취향
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string | ✓ | Primary key |
+| status | string | ✓ | Lifecycle or workflow state |
+| description | text |  | Human-readable summary |
+| label | string | ✓ | Display label for UI lists |
 
-| Given                                      | When                                        | Then                                   | Feature id to Validate |
-|--------------------------------------------|--------------------------------------------|----------------------------------------|-------------------------|
-| User is in the app                         | When using core features                    | Over 200 active users within a month   | feat-72b70b             |
-| User is in the app                         | When using core features                    | Food recommendation accuracy over 80%   | feat-72b70b             |
-| User is in the app                         | When using core features                    | User feedback positivity rate over 70%   | feat-72b70b             |
+### 추천 내역
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string | ✓ | Primary key |
+| status | string | ✓ | Lifecycle or workflow state |
+| description | text |  | Human-readable summary |
+| label | string | ✓ | Display label for UI lists |
 
-## 12. AI Workflow (Customized by IDE)
+### 알림
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string | ✓ | Primary key |
+| status | string | ✓ | Lifecycle or workflow state |
+| description | text |  | Human-readable summary |
+| label | string | ✓ | Display label for UI lists |
 
-1. Create a `CLAUDE.md` file to summarize the project overview and goals.
-2. Create a `rules.md` file to define rules for backend contract and data model.
-3. Create a `commands.md` file to outline commands and usage for each feature.
-4. Create an `integration.md` file to explain how to integrate external services.
-5. Based on each file, allow coding AI to automatically generate necessary parts.
-6. Ensure that the code generated by AI is reviewed before deployment.
-7. Manage service connection keys and secret information only through environment variables.
-8. Proceed with feature requests only when explicitly requested.
 
-## 13. Do NOT (AI Prohibited Rules)
-- Do not arbitrarily add features, screens, or APIs that are not in the requirements.
-- Do not present unverified figures, dates, or forecasts as facts.
-- Do not implement production deployment or connect to live service domains without explicit requests.
-- Do not hardcode service connection keys, secrets, or PG keys in the code; reference them only through environment variables (.env).
+## 7. Authentication & permissions
+
+- Login required: **no**
+- Methods: email
+- Roles: _(none)_
+
+## 8. Monetization & analytics (impact on code)
+
+- **Model**: Mixed (e.g. free + ads + paid tier)
+- **Implementation notes**:
+  - No additional monetization or analytics modules for MVP.
+- **Memo**: 제휴 마케팅
+
+
+## 9. External integrations (PG · OAuth · MCP)
+
+### Payment (PG)
+- No PG integration in MVP.
+
+### Social login (OAuth)
+- No social login (email-only or anonymous).
+
+### MCP (optional)
+- **Servers**: (to be specified)
+- **Notes**: 카카오 알림톡, 네이버 지도
+
+
+## 10. Tech stack
+
+| Layer | Choice |
+|-------|--------|
+| Device | Web (browser) |
+| Frontend | next |
+| Backend | fastapi |
+| Database | postgresql |
+| Deployment | TBD |
+
+## 11. Acceptance criteria
+
+1. **Given** 사용자가 앱에 진입한 상태에서 **When** 주요 기능을 사용했을 때 **Then** 한 달 내 200명 이상 활성 사용자
+2. **Given** 사용자가 앱에 진입한 상태에서 **When** 주요 기능을 사용했을 때 **Then** 음식 추천 정확도 80% 이상
+3. **Given** 사용자가 앱에 진입한 상태에서 **When** 주요 기능을 사용했을 때 **Then** 사용자 피드백 긍정률 70% 이상
+
+## 12. Do NOT (AI prohibitions)
+
+- 요구사항에 없는 기능·화면·API를 임의로 추가하지 않는다.
+- 확인되지 않은 수치·날짜·전망을 사실처럼 쓰지 않는다.
+- 프로덕션 배포·실서비스 도메인 연결은 명시적 요청 없이 구현하지 않는다.
+- API 키·시크릿·PG 키는 코드에 하드코딩하지 않고 환경변수(.env)로만 참조한다.
+
+
+## 13. Design / references
+
+- UI theme: lavender_tech
+- Tone: -
+- Reference apps: -
+- Coding IDE: Claude Code

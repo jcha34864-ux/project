@@ -1,27 +1,21 @@
 # CLAUDE.md — 혼밥하는 사람들을 위한 듀오밥
 
+This file is read automatically by Claude Code at every session. Treat it as the
+short, always-loaded guardrail. Detailed specs live in `docs/PRD.md`.
+
 ## Project at a glance
 
-- **One-liner**: A platform for people who eat alone to share information and arrange meetups.
+- **One-liner**: 혼밥하는 사람들을 만의 커뮤니티를 만들어서 정보를 공유하고 소개팅도 진행하는 플랫폼
 - **Device target**: Web (browser)
 
 ## Source of truth
 
-`docs/PRD.md` is the **single source of truth**. Any edit that diverges from the PRD MUST be reflected back to `docs/PRD.md` in the same commit.
+`docs/PRD.md` is the **single source of truth**. Any edit that diverges from the
+PRD MUST be reflected back to `docs/PRD.md` in the same commit.
 
 ## Killer differentiator
 
-User matching system
-
-## Recommended workflow with Claude Code
-
-- Use **Plan mode** for ambiguous tasks to clarify objectives.
-- Employ **sub-agents** for parallel exploration of features.
-- Maintain **todo discipline**: work on one task at a time, and only commit when explicitly asked.
-
-## Folder structure
-
-<!-- TBD: Define folder structure -->
+사용자 매칭 시스템
 
 ## Stack
 
@@ -32,20 +26,20 @@ User matching system
 
 ## External integrations
 
-- **MCP / external services**: enabled — Kakao Talk notifications, Naver Maps.
+- **MCP / external services**: enabled — 카카오 알림톡, 네이버 지도.
 
-## Coding conventions
+## Do NOT
 
-- All generated source code and documentation MUST be in English.
-- User-facing strings can remain in Korean as specified in the PRD.
+- 요구사항에 없는 기능·화면·API를 임의로 추가하지 않는다.
+- 확인되지 않은 수치·날짜·전망을 사실처럼 쓰지 않는다.
+- 프로덕션 배포·실서비스 도메인 연결은 명시적 요청 없이 구현하지 않는다.
+- API 키·시크릿·PG 키는 코드에 하드코딩하지 않고 환경변수(.env)로만 참조한다.
 
-## Test discipline
+## Workflow rules
 
-<!-- TBD: Define testing strategy and discipline -->
-
-## Do NOT (hard rules)
-
-- Do not arbitrarily add features, screens, or APIs not specified in the requirements.
-- Do not present unverified numbers, dates, or forecasts as facts.
-- Do not implement production deployments or connect to live service domains without explicit requests.
-- Do not hardcode API keys, secrets, or payment gateway keys; reference them only through environment variables (.env).
+- Read `docs/PRD.md` before writing code in a new area.
+- When adding a feature: locate the matching section in PRD §4 (Features) and
+  PRD §11 (Acceptance Criteria) and cite it in the commit message.
+- When changing folder structure: update PRD §10 in the same commit.
+- All generated source code and documentation MUST be in English. User-facing
+  copy may stay in the language declared by PRD.
