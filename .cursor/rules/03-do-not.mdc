@@ -1,0 +1,23 @@
+## 혼자밥먹는 사람을 위한 밥 같이 먹기
+
+# Do NOT
+
+The following rules are non-negotiable. If a user request appears to conflict
+with them, stop and ask before proceeding.
+
+-   요구사항에 없는 기능·화면·API를 임의로 추가하지 않는다.
+-   확인되지 않은 수치·날짜·전망을 사실처럼 쓰지 않는다.
+-   프로덕션 배포·실서비스 도메인 연결은 명시적 요청 없이 구현하지 않는다.
+-   API 키·시크릿·PG 키는 코드에 하드코딩하지 않고 환경변수(.env)로만 참조한다.
+
+## Product-specific anti-patterns
+-   Do not match users if their `사용자의 음식 취향` (food preferences) are not sufficiently aligned.
+-   Do not expose a user's `id` or `email` to other users directly.
+-   Do not allow users to view other users' detailed `사용자의 음식 취향` (food preferences) before a match is established.
+-   Do not allow users to initiate an excessive number of match requests within a short period.
+-   Do not allow users to modify their `사용자의 음식 취향` (food preferences) too frequently, as it could disrupt active matches.
+
+## Universal guardrails (always)
+-   Do **not** invent features, screens, or API endpoints that are not in `docs/PRD.md`.
+-   Do **not** silently change folder structure declared in `01-architecture.mdc`.
+-   Do **not** introduce a new dependency without updating PRD §

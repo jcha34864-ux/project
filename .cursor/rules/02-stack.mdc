@@ -1,0 +1,44 @@
+## Stack at a glance
+
+| Layer      | Choice             | Conservative Version Pin Hint       |
+|------------|--------------------|-------------------------------------|
+| Frontend   | react_native       | <!-- TBD: No specific framework version mentioned --> |
+| Backend    | firebase_functions | <!-- TBD: No specific framework version mentioned --> |
+| Database   | firestore          | <!-- TBD: No specific framework version mentioned --> |
+| Deployment | Firebase App Distribution + Firebase Functions | <!-- TBD: No specific framework version mentioned --> |
+
+## Key libraries per layer
+
+- **Frontend**: React Native libraries for UI components and state management.
+- **Backend**: Firebase Functions for serverless backend logic.
+- **Database**: Firestore for real-time database operations.
+- **Deployment**: Firebase App Distribution for app delivery and Firebase Functions for backend deployment.
+
+## Test stack
+
+- Use Jest for unit testing React Native components.
+- Use Firebase Emulator Suite for testing Firebase Functions and Firestore interactions.
+
+## CI sketch
+
+1. Set up a CI pipeline using GitHub Actions.
+2. Install dependencies for React Native and Firebase.
+3. Run linter for code quality checks.
+4. Execute unit tests for React Native components using Jest.
+5. Deploy Firebase Functions to a staging environment.
+6. Run integration tests against the staging environment.
+7. Deploy to production if all tests pass.
+8. Notify the team of deployment status.
+
+## Env var matrix
+
+| Var               | Scope       | Example               |
+|-------------------|-------------|-----------------------|
+| FIREBASE_API_KEY  | Backend     | `AIzaSy...`           |
+| FIREBASE_AUTH_DOMAIN | Backend  | `example.firebaseapp.com` |
+| FIREBASE_PROJECT_ID | Backend   | `example-project`     |
+| FIREBASE_STORAGE_BUCKET | Backend | `example.appspot.com` |
+| FIREBASE_MESSAGING_SENDER_ID | Backend | `1234567890`     |
+| FIREBASE_APP_ID   | Backend     | `1:1234567890:web:abcdef` |
+| FIREBASE_MEASUREMENT_ID | Backend | `G-ABCDEFGH`         |
+| ADMOB_APP_ID      | Frontend    | `ca-app-pub-3940256099942544~3347511713` |
