@@ -1,0 +1,29 @@
+---
+description: Feature implementation unit — 실제 사용자 매칭 및 채팅 기능 추가 (혼자밥먹는 사람을 위한 밥 같이 먹기). Load only while implementing this feature.
+globs: ["app/**", "frontend/**", "backend/**", "src/**"]
+alwaysApply: false
+---
+
+# Feature: 실제 사용자 매칭 및 채팅 기능 추가
+
+- **english_key**: `00276e82`
+- **priority**: must
+- **scope**: Implement ONLY this feature slice in this session.
+
+## TDD mandate
+
+1. Write failing tests first (unit or integration) for the acceptance criteria below.
+2. Implement minimal code to pass tests.
+3. Do NOT read the entire PRD — use this file + referenced routes/entities only.
+
+## Acceptance (compressed)
+
+- **When** 주요 기능을 사용했을 때 → **Then** 7일 재방문율 30% 이상
+
+## Detail
+
+사용자가 실제 가입한 사용자와 매칭되도록 변경하고, 매칭된 사용자와 채팅할 수 있는 기능을 추가합니다. 채팅 기능에는 메시지 입력 및 전송, 메시지 읽음 확인, 채팅방 나가기 버튼이 포함됩니다.
+
+## Stop condition
+
+When all acceptance tests pass and routes match semantic paths in PRD §5, stop and commit.

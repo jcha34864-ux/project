@@ -1,131 +1,32 @@
-## Folder tree (recommended)
+---
+description: Folder structure, routing and module boundaries for 혼자밥먹는 사람을 위한 밥 같이 먹기.
+alwaysApply: false
+---
 
-```text
-honbab-together/                        # repo root
-├── app/                                # React Native app (Expo recommended)
-│   ├── assets/                         # images, fonts, icons
-│   ├── src/
-│   │   ├── screens/
-│   │   │   ├── auth/
-│   │   │   │   ├── LoginScreen.tsx
-│   │   │   │   └── SignupScreen.tsx
-│   │   │   ├── onboarding/
-│   │   │   │   └── FoodPreferenceScreen.tsx   # screen-1f6665
-│   │   │   ├── matching/
-│   │   │   │   └── UserProfileCardScreen.tsx  # screen-1f6665 layout
-│   │   │   └── index.ts
-│   │   ├── navigation/
-│   │   │   ├── RootNavigator.tsx
-│   │   │   ├── AuthNavigator.tsx
-│   │   │   └── MainNavigator.tsx
-│   │   ├── components/
-│   │   │   ├── common/                 # Button, Card, Avatar, Badge
-│   │   │   ├── profile/
-│   │   │   │   └── UserProfileCard.tsx
-│   │   │   ├── food/
-│   │   │   │   └── FoodTagSelector.tsx
-│   │   │   └── ads/
-│   │   │       └── AdMobBanner.tsx
-│   │   ├── hooks/
-│   │   │   ├── useAuth.ts
-│   │   │   ├── useMatching.ts
-│   │   │   └── useFoodPreferences.ts
-│   │   ├── services/
-│   │   │   ├── firebase.ts             # Firebase app init
-│   │   │   ├── authService.ts          # Google OAuth via Firebase Auth
-│   │   │   ├── matchingService.ts      # calls Cloud Functions
-│   │   │   └── adService.ts            # AdMob integration
-│   │   ├── store/                      # Zustand or Context slices
-│   │   │   ├── authStore.ts
-│   │   │   └── matchingStore.ts
-│   │   ├── types/
-│   │   │   ├── user.ts                 # 사용자 entity types
-│   │   │   ├── foodPreference.ts       # 사용자의 음식 취향 entity types
-│   │   │   └── api.ts
-│   │   ├── utils/
-│   │   │   ├── logger.ts
-│   │   │   └── errorHandler.ts
-│   │   └── constants/
-│   │       ├── foodList.ts             # canonical food tag list
-│   │       └── routes.ts
-│   ├── app.json
-│   └── package.json
-│
-├── functions/                          # Firebase Cloud Functions (Node 20)
-│   ├── src/
-│   │   ├── auth/
-│   │   │   ├── onUserCreate.ts         # Firestore doc init on signup
-│   │   │   └── authHandlers.ts
-│   │   ├── matching/
-│   │   │   ├── matchingEngine.ts       # food-preference similarity logic
-│   │   │   └── matchingHandlers.ts     # callable / HTTP triggers
-│   │   ├── users/
-│   │   │   └── userHandlers.ts         # CRUD for 사용자
-│   │   ├── preferences/
-│   │   │   └── preferenceHandlers.ts   # CRUD for 사용자의 음식 취향
-│   │   ├── middleware/
-│   │   │   ├── authenticate.ts         # verify Firebase ID token
-│   │   │   └── validate.ts             # zod request validation
-│   │   ├── utils/
-│   │   │   ├── logger.ts               # structured Cloud Logging
-│   │   │   └── errors.ts               # AppError class + codes
-│   │   └── index.ts                    # function exports
-│   ├── package.json
-│   └── tsconfig.json
-│
-├── firestore.rules
-├── firestore.indexes.json
-├── firebase.json
-├── .env.example
-└── README.md
-```
+# Architecture
 
-## Module boundaries
+## Stack
+- **Frontend**: `react_native`
+- **Backend**: `firebase_functions`
+- **Database**: `firestore`
+- **Deployment**: Firebase App Distribution + Firebase Functions
 
-- **`app/src/screens/`** — page-level components only; no direct Firestore calls.
-- **`app/src/services/`** — sole layer allowed to call Firebase SDK or Cloud Functions; screens must go through services.
-- **`app/src/store/`** — global state only; no business logic; delegates to services.
-- **`app/src/components/`** — pure UI; receives props; no store imports except via hooks.
-- **`functions/src/matching/`** — owns all matching algorithm logic; no other module may replicate similarity scoring.
-- **`functions/src/middleware/`** — every HTTP/callable handler must pass through `authenticate` before touching Firestore.
-- **`app/src/components/ads/`** — AdMob code is isolated here; never inline ad calls in screens.
-- Cross-module imports flow **inward only**: screens → hooks → store → services → firebase.ts.
+## Routing / Pages
 
-## Data flow (ascii)
+| Route | Page | Purpose |
+|-------|------|---------|
+| `/screen-1f6665` | 밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으 — 사용자 프로필 카드형 | 밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으 기능의 화면 레이아웃 (사용자 프로필 카드형) |
 
-```text
-┌─────────────────────────────────────────────────────────┐
-│                  React Native App                        │
-│                                                          │
-│  Screen (FoodPreferenceScreen / UserProfileCardScreen)   │
-│      │  user interaction                                 │
-│      ▼                                                   │
-│  Hook (useFoodPreferences / useMatching)                 │
-│      │  read/write state                                 │
-│      ▼                                                   │
-│  Store (matchingStore / authStore)  ◄──── authStore      │
-│      │  call service                                     │
-│      ▼                                                   │
-│  Service (matchingService / authService)                 │
-│      │  HTTPS Callable / REST                            │
-└──────┼──────────────────────────────────────────────────┘
-       │  Firebase SDK (ID token attached)
-       ▼
-┌─────────────────────────────────────────────────────────┐
-│              Firebase Cloud Functions                    │
-│                                                          │
-│  authenticate middleware  ──►  validate middleware       │
-│      │                                                   │
-│      ▼                                                   │
-│  Handler (matchingHandlers / preferenceHandlers)         │
-│      │                                                   │
-│      ▼                                                   │
-│  matchingEngine  (cosine similarity on food tags)        │
-│      │                                                   │
-│      ▼                                                   │
-│  Firestore  ┌──────────────────────────────┐            │
-│             │  users/{uid}                 │            │
-│             │  users/{uid}/preferences/{id}│            │
-│             │  matches/{matchId}           │            │
-│             └──────────────────────────────┘            │
-└─────────────────
+## Per-feature page notes
+
+- **밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으**
+  - 사용자 프로필 카드형
+- **실제 사용자 매칭 및 채팅 기능 추가**
+  - /screen-1f6665
+
+## Entities (data model)
+
+- **사용자**
+- **사용자의 음식 취향**
+
+> Detailed field-level schema lives in PRD §6. Do not invent fields outside that section.

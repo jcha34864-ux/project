@@ -1,245 +1,124 @@
 # PRD: 혼자밥먹는 사람을 위한 밥 같이 먹기
 
-Project Name: 혼자밥먹는 사람을 위한 밥 같이 먹기
-One-liner: A system that matches people who dislike eating alone to share meals together.
-Device Target: mobile_app
-Device Target Detail: 모바일 앱
-IDE Target: cursor
+> 📌 Device: **Mobile app (iOS / Android)** · 🧠 Coding IDE: **Cursor**
+> 📝 Device detail (user wording): **모바일 앱**
 
-## 1. Product Overview
+> Cubivora Spec-First PRD (auto-generated). Treat this document as the single source of truth during implementation.
 
-This document outlines the requirements for "혼자밥먹는 사람을 위한 밥 같이 먹기" (A system that matches people who dislike eating alone to share meals together), a mobile application designed to connect individuals seeking meal companions. The core value proposition is to alleviate the loneliness of eating alone by matching users based on their food preferences. Users will select their preferred foods upon signing up and be matched with others who share similar tastes, enabling them to find and share meals together. The application will be developed for mobile platforms (iOS/Android) using React Native, Firebase Functions, and Firestore, with Cursor as the primary IDE.
+## 1. One-liner
 
-## 2. Out of Scope
+혼자 밥 먹기 싫은 사람들이 같이 모여서 밥을 먹는 밥먹을 사람을 매칭해주는 시스템
 
-*   Real-time location tracking for exact meetups (only general location text will be supported).
-*   Complex group matching (MVP focuses on 1:1 matching).
-*   Integrated payment for meals (users handle payments directly).
-*   Restaurant booking integration.
-*   Video/voice chat functionality.
-*   Advanced moderation tools beyond basic reporting.
+## 2. Out of scope
 
-## 3. Target Users
+- _(none)_
 
-*   **People eating alone:** Individuals who frequently eat alone and wish to find companionship for meals.
-*   **People looking for meal companions:** Users actively seeking others to share dining experiences with.
+
+## 3. Target users
+
+- 혼밥 하는 사람
+- 밥 친구를 찾는 사람
+
 
 ### Target persona — depth
 
-People who are tired of eating alone and want to find someone to share a meal with. They value shared experiences, convenience, and connecting with others who have similar interests, especially regarding food.
+혼밥이 지겨운 사람들이 깊게 쓸 거고 혼밥하다가 밥을 같이 먹고 싶을때 같이 먹을 사람을 찾는 용도로
 
-## 4. Core Features (Features)
+## 3.5 Killer differentiator
 
-| ID | Title | Description | Priority | Screens |
-| :-- | :-- | :-- | :-- | :-- |
-| `feat-1f6665` | **User Food Preference Matching** | To match meal companions, the app must determine if two users have similar food preferences. Users select their favorite foods upon signing up, and based on this data, the app generates a list of various foods to gather user preference data and matches users with similar tastes. The feature must include a list of food types (e.g., Chinese, Japanese) for selection and a matching function based on these choices. | `must` | User Profile Card |
-| `feat-profile-mgmt` | **User Profile Management** | Users can create and edit their personal profile, including a profile picture, display name, a short bio, and their general location. This allows other users to learn more about potential meal companions. | `must` | Profile Edit Screen, User Profile Card |
-| `feat-meal-request` | **Meal Request Creation** | Users can post a new request to find a meal companion. This includes specifying preferred cuisine types, desired meal time (date/time range), a general meeting location (text input), and the number of companions sought (initially 1). | `must` | Create Meal Request Screen |
-| `feat-browse-filter` | **Browse & Filter Meal Requests** | Users can view a list of active meal requests posted by other users. The list should be filterable by cuisine type, meal time, and general location, helping users find relevant opportunities. | `must` | Home Screen (Meal Requests List) |
-| `feat-match-accept` | **Meal Request Acceptance & Matching** | Users can accept an open meal request from another user. Upon acceptance, a "match" is created between the two users, and both are notified. This initiates the process of sharing a meal. | `must` | Meal Request Detail Screen |
-| `feat-in-app-chat` | **In-App Chat for Matched Users** | Matched users can communicate with each other through a simple in-app chat interface. This allows them to coordinate details for their shared meal, such as exact meeting spot and time. | `must` | Chat Screen |
+사용자가 선호하는 음식을 선택하고 비슷한 음식을 선택한 사람들 끼리 매칭
 
-## 5. Screens & Routes
+## 4. Core features
 
-| Route | Name | Purpose | Feature ID | Theme |
-| :-- | :-- | :-- | :-- | :-- |
-| `/login` | Login/Signup Screen | Allows users to authenticate or create a new account. | `auth` | `deep_navy` |
-| `/onboarding/food-preferences` | Food Preference Selection | Users select their favorite food types during signup/onboarding. | `feat-1f6665` | `deep_navy` |
-| `/profile/edit` | Profile Edit Screen | Users can update their profile information (picture, bio, location). | `feat-profile-mgmt` | `deep_navy` |
-| `/profile/:user_id` | User Profile Card | Displays a user's profile, including food preferences and bio, for potential companions. | `feat-1f6665`, `feat-profile-mgmt` | `deep_navy` |
-| `/home` | Home Screen (Meal Requests List) | Displays a list of available meal requests, with filtering options. | `feat-browse-filter` | `deep_navy` |
-| `/meal-requests/new` | Create Meal Request Screen | Allows users to post a new meal request. | `feat-meal-request` | `deep_navy` |
-| `/meal-requests/:request_id` | Meal Request Detail Screen | Shows detailed information about a specific meal request. | `feat-browse-filter`, `feat-match-accept` | `deep_navy` |
-| `/matches` | My Matches Screen | Lists all active and past matches for the current user. | `feat-match-accept` | `deep_navy` |
-| `/matches/:match_id/chat` | Chat Screen | Provides a messaging interface for matched users. | `feat-in-app-chat` | `deep_navy` |
+- **[MUST]** 밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으 — 밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으론 매칭하도록 먼저 여러가지 음식 리스트를 뽑고 그걸로 사용자의 취향 데이터를 얻어야해 그리고 같은 음식 취향을 가진 사람들을 매칭하는 식으로
+  - 🔎 Detail: 음식 취향 매칭 기능은 중식 일식 등 음식 종류 리스트뽑고 그걸 사용자가 선택하게 하고 사용자가 음식 취향을 기반으로 비슷한 취향의 사람을 찾는 매칭 기능도 있어야해
+- **[MUST]** 실제 사용자 매칭 및 채팅 기능 추가 — 사용자가 실제 가입한 사용자와 매칭되도록 변경하고, 매칭된 사용자와 채팅할 수 있는 기능을 추가합니다. 채팅 기능에는 메시지 입력 및 전송, 메시지 읽음 확인, 채팅방 나가기 버튼이 포함됩니다.
 
-## 6. Data Model
+## 5. Screens / URLs
 
-### User
+| Route | Page | Purpose |
+|-------|------|---------|
+| `/screen-1f6665` | 밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으 — 사용자 프로필 카드형 | 밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으 기능의 화면 레이아웃 (사용자 프로필 카드형) |
+
+## 5.5 Per-feature screens
+
+### 🧩 Screens for the “밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으” feature
+- 사용자 프로필 카드형
+
+### 🧩 Screens for the “실제 사용자 매칭 및 채팅 기능 추가” feature
+- /screen-1f6665
+
+## 6. Data model
+
+### 사용자
 | Field | Type | Required | Description |
-| :-- | :-- | :-- | :-- |
-| `id` | `string` | ✓ | Primary key (Firebase Auth UID) |
-| `email` | `string` | ✓ | User's email address |
-| `display_name` | `string` | ✓ | User's chosen display name |
-| `profile_picture_url` | `string` | | URL to user's profile image |
-| `bio` | `text` | | Short user biography |
-| `location_text` | `string` | | General text description of user's location (e.g., "Gangnam, Seoul") |
-| `food_preference_ids` | `array<string>` | ✓ | Array of `FoodItem` IDs the user prefers |
-| `created_at` | `timestamp` | ✓ | Timestamp of user creation |
-| `updated_at` | `timestamp` | ✓ | Timestamp of last profile update |
+|-------|------|----------|-------------|
+| id | string | ✓ | Primary key |
+| status | string | ✓ | Lifecycle or workflow state |
+| description | text |  | Human-readable summary |
+| label | string | ✓ | Display label for UI lists |
 
-### FoodItem
+### 사용자의 음식 취향
 | Field | Type | Required | Description |
-| :-- | :-- | :-- | :-- |
-| `id` | `string` | ✓ | Primary key (e.g., "korean", "chinese") |
-| `name_ko` | `string` | ✓ | Food item name in Korean (e.g., "한식") |
-| `name_en` | `string` | ✓ | Food item name in English (e.g., "Korean") |
-| `description` | `text` | | Optional description of the food type |
+|-------|------|----------|-------------|
+| id | string | ✓ | Primary key |
+| status | string | ✓ | Lifecycle or workflow state |
+| description | text |  | Human-readable summary |
+| label | string | ✓ | Display label for UI lists |
 
-### MealRequest
-| Field | Type | Required | Description |
-| :-- | :-- | :-- | :-- |
-| `id` | `string` | ✓ | Primary key |
-| `requester_user_id` | `string` | ✓ | ID of the user who created the request |
-| `cuisine_preference_ids` | `array<string>` | ✓ | Array of `FoodItem` IDs for this request |
-| `meal_time` | `timestamp` | ✓ | Desired time for the meal |
-| `location_text` | `string` | ✓ | General text description of meeting location |
-| `num_companions_sought` | `integer` | ✓ | Number of companions the requester is looking for (MVP: 1) |
-| `status` | `enum` | ✓ | `open`, `matched`, `closed`, `cancelled` |
-| `created_at` | `timestamp` | ✓ | Timestamp of request creation |
-| `updated_at` | `timestamp` | ✓ | Timestamp of last update |
 
-### Match
-| Field | Type | Required | Description |
-| :-- | :-- | :-- | :-- |
-| `id` | `string` | ✓ | Primary key |
-| `meal_request_id` | `string` | ✓ | ID of the `MealRequest` this match is for |
-| `requester_user_id` | `string` | ✓ | ID of the user who made the original request |
-| `companion_user_id` | `string` | ✓ | ID of the user who accepted the request |
-| `status` | `enum` | ✓ | `pending_confirmation`, `confirmed`, `completed`, `cancelled` |
-| `created_at` | `timestamp` | ✓ | Timestamp of match creation |
-| `updated_at` | `timestamp` | ✓ | Timestamp of last update |
+## 7. Authentication & permissions
 
-### ChatMessage
-| Field | Type | Required | Description |
-| :-- | :-- | :-- | :-- |
-| `id` | `string` | ✓ | Primary key |
-| `match_id` | `string` | ✓ | ID of the `Match` this message belongs to |
-| `sender_user_id` | `string` | ✓ | ID of the user who sent the message |
-| `message_text` | `text` | ✓ | Content of the message |
-| `sent_at` | `timestamp` | ✓ | Timestamp when the message was sent |
+- Login required: **yes**
+- Methods: google
+- Roles: _(none)_
 
-## 7. API Design (Backend Contract)
+## 8. Monetization & analytics (impact on code)
 
-Base URL: `[TBD: Firebase Functions HTTP trigger URL]`
+- **Model**: Ad-supported
+- **Implementation notes**:
+  - Requires ad SDK and ad placement UI.
+- **Memo**: 무료 + 광고
 
-| Method | Path | Request Body | Response 200 | Error Codes | Auth Scope | Entity Ref | Purpose |
-| :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
-| `POST` | `/auth/signup` | `{email, password, display_name}` | `{id, email, display_name, created_at}` | `400, 409` | `guest` | `User` | Register a new user account. |
-| `POST` | `/auth/login` | `{email, password}` | `{token}` | `401` | `guest` | `User` | Authenticate user and return JWT. |
-| `GET` | `/auth/me` | | `{id, email, display_name, profile_picture_url, bio, location_text, food_preference_ids, created_at}` | `401` | `authenticated` | `User` | Get current authenticated user's profile. |
-| `GET` | `/users/{user_id}` | | `{id, display_name, profile_picture_url, bio, location_text, food_preference_ids}` | `401, 404` | `authenticated` | `User` | Get a specific user's public profile. |
-| `PUT` | `/users/me` | `{display_name?, profile_picture_url?, bio?, location_text?, food_preference_ids?}` | `{id, display_name, profile_picture_url, bio, location_text, food_preference_ids, updated_at}` | `400, 401` | `authenticated` | `User` | Update current user's profile. |
-| `GET` | `/food_items` | | `[{id, name_ko, name_en, description}]` | `401` | `authenticated` | `FoodItem` | Get list of all available food types. |
-| `POST` | `/meal_requests` | `{cuisine_preference_ids, meal_time, location_text, num_companions_sought}` | `{id, requester_user_id, cuisine_preference_ids, meal_time, location_text, status, created_at}` | `400, 401` | `authenticated` | `MealRequest` | Create a new meal request. |
-| `GET` | `/meal_requests` | `?cuisine_ids=id1,id2&time_start=ts1&time_end=ts2&location_text=text` | `[{id, requester_user_id, cuisine_preference_ids, meal_time, location_text, status, created_at}]` | `401` | `authenticated` | `MealRequest` | List open meal requests, with optional filters. |
-| `GET` | `/meal_requests/{request_id}` | | `{id, requester_user_id, cuisine_preference_ids, meal_time, location_text, num_companions_sought, status, created_at}` | `401, 404` | `authenticated` | `MealRequest` | Get details of a specific meal request. |
-| `POST` | `/meal_requests/{request_id}/accept` | | `{id, meal_request_id, requester_user_id, companion_user_id, status, created_at}` | `400, 401, 404, 409` | `authenticated` | `Match` | Accept a meal request, creating a match. |
-| `GET` | `/matches/me` | `?status=active,completed` | `[{id, meal_request_id, requester_user_id, companion_user_id, status, created_at}]` | `401` | `authenticated` | `Match` | List current user's matches. |
-| `PUT` | `/matches/{match_id}/confirm` | | `{id, status=confirmed, updated_at}` | `400, 401, 404` | `authenticated` | `Match` | Confirm a pending match. |
-| `PUT` | `/matches/{match_id}/cancel` | | `{id, status=cancelled, updated_at}` | `400, 401, 404` | `authenticated` | `Match` | Cancel an active match. |
-| `GET` | `/matches/{match_id}/messages` | `?limit=50&start_after=message_id` | `[{id, sender_user_id, message_text, sent_at}]` | `401, 404` | `authenticated` | `ChatMessage` | Get chat messages for a specific match. |
-| `POST` | `/matches/{match_id}/messages` | `{message_text}` | `{id, match_id, sender_user_id, message_text, sent_at}` | `400, 401, 404` | `authenticated` | `ChatMessage` | Send a new chat message within a match. |
 
-## 8. Auth & Permissions
+## 9. External integrations (PG · OAuth · MCP)
 
-*   **Login required:** Yes
-*   **Methods:** Google OAuth (Firebase Authentication)
-*   **Roles:**
-    *   `authenticated`: All users who have successfully logged in. Can access all features.
-    *   `guest`: Unauthenticated users. Can only access `/auth/signup` and `/auth/login`.
+### Payment (PG)
+- No PG integration in MVP.
 
-## 9. External Integrations (PG, OAuth, MCP, AI models)
+### Social login (OAuth)
+- No social login (email-only or anonymous).
 
-*   **Payment Gateway (PG):**
-    *   Enabled: No
-    *   Notes: Not required for MVP.
-*   **OAuth:**
-    *   Enabled: Yes
-    *   Providers: Google (via Firebase Authentication)
-    *   Callback Path Pattern: `/api/auth/callback/{provider}` (handled by Firebase)
-    *   Environment Variables: `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`, etc.
-    *   Flow Description: Users will be redirected to Google for authentication, then back to the app. Firebase handles token exchange and session management.
-*   **Mobile Content Platform (MCP):**
-    *   Enabled: Yes
-    *   Servers: AdMob
-    *   Notes: App advertising (AdMob) will be integrated for monetization.
-    *   Environment Variables: `ADMOB_APP_ID`, `ADMOB_BANNER_AD_UNIT_ID` (for specific ad placements).
-*   **AI Models:**
-    *   Enabled: No
-    *   Notes: Not required for MVP. Food preference matching is rule-based.
+### MCP (optional)
+- **Servers**: (to be specified)
+- **Notes**: 앱 광고 (AdMob)
 
-## 10. Monetization & Analytics
 
-*   **Monetization Model:** Ad-supported (Free + advertising)
-*   **Implementation Notes:**
-    *   Requires integration of the Google AdMob SDK into the React Native application.
-    *   Ad placements (e.g., banner ads, interstitial ads) will be strategically placed within the UI, particularly on screens with high user engagement like the meal request browsing list.
-*   **Analytics Tracking:** No (as per `profile_json`)
-*   **Product KPIs:**
-    *   30% or higher 7-day revisit rate (primary success metric)
-    *   Number of new meal requests created per day.
-    *   Number of successful matches per day.
-    *   Average daily active users (DAU).
-    *   Ad impression count and click-through rate.
+## 10. Tech stack
 
-## 11. Acceptance Criteria (Given/When/Then)
+| Layer | Choice |
+|-------|--------|
+| Device | Mobile app (iOS / Android) |
+| Frontend | react_native |
+| Backend | firebase_functions |
+| Database | firestore |
+| Deployment | Firebase App Distribution + Firebase Functions |
 
-1.  **User Food Preference Selection:**
-    *   **Given** a new user is completing the signup process.
-    *   **When** the user navigates to the food preference selection screen (`/onboarding/food-preferences`), selects "Korean" and "Japanese" from the provided list, and taps "Save".
-    *   **Then** a `PUT /users/me` request is sent with `food_preference_ids` containing `["korean", "japanese"]`, the user's preferences are successfully stored, and the user is redirected to the home screen.
-2.  **User Profile Update:**
-    *   **Given** an authenticated user is on their profile edit screen (`/profile/edit`).
-    *   **When** the user updates their `bio` to "Loves trying new restaurants" and their `display_name` to "MealMate" and taps "Save".
-    *   **Then** a `PUT /users/me` request is sent with the updated fields, the profile is successfully updated in the backend, and the changes are reflected on the user's profile card (`/profile/:user_id`).
-3.  **Meal Request Creation:**
-    *   **Given** an authenticated user is on the "Create Meal Request" screen (`/meal-requests/new`).
-    *   **When** the user selects "Chinese" cuisine, sets `meal_time` for "tomorrow 7 PM", `location_text` as "Hongdae", and taps "Post Request".
-    *   **Then** a `POST /meal_requests` request is sent with the specified details, a new `MealRequest` is created with `status: 'open'`, and the user is redirected to the home screen.
-4.  **Browse & Filter Meal Requests:**
-    *   **Given** an authenticated user is on the Home screen (`/home`) viewing meal requests.
-    *   **When** the user applies a filter for "Korean" cuisine.
-    *   **Then** a `GET /meal_requests?cuisine_ids=korean` request is made, and only meal requests matching "Korean" cuisine are displayed in the list.
-5.  **Meal Request Acceptance & Match Creation:**
-    *   **Given** an authenticated user is viewing a specific open meal request on the Meal Request Detail screen (`/meal-requests/:request_id`).
-    *   **When** the user taps the "Accept Request" button.
-    *   **Then** a `POST /meal_requests/{request_id}/accept` request is sent, a new `Match` entity is created linking the requester and the companion, the `MealRequest` status is updated to `matched`, and both users receive an in-app notification about the new match.
-6.  **In-App Chat Message Sending:**
-    *   **Given** two users are matched and are on the Chat screen for their match (`/matches/:match_id/chat`).
-    *   **When** User A types "Hi, looking forward to our meal!" and taps "Send".
-    *   **Then** a `POST /matches/{match_id}/messages` request is sent, a new `ChatMessage` is stored, and the message appears in the chat history for both users.
-7.  **AdMob Banner Display:**
-    *   **Given** an authenticated user is on the Home screen (`/home`).
-    *   **When** the screen loads and the AdMob SDK is initialized.
-    *   **Then** an AdMob banner ad is displayed at the bottom of the screen, without obstructing critical UI elements.
+## 11. Acceptance criteria
 
-## 12. AI Workflow (IDE-specific)
+1. **Given** 사용자가 앱에 진입한 상태에서 **When** 주요 기능을 사용했을 때 **Then** 7일 재방문율 30% 이상
 
-**IDE Target: Cursor**
+## 12. Do NOT (AI prohibitions)
 
-The implementation will leverage Cursor's AI capabilities, specifically its `Composer` and `Agent` features, along with custom `.cursor/rules/*.mdc` files for enforcing project standards.
+- 요구사항에 없는 기능·화면·API를 임의로 추가하지 않는다.
+- 확인되지 않은 수치·날짜·전망을 사실처럼 쓰지 않는다.
+- 프로덕션 배포·실서비스 도메인 연결은 명시적 요청 없이 구현하지 않는다.
+- API 키·시크릿·PG 키는 코드에 하드코딩하지 않고 환경변수(.env)로만 참조한다.
 
-1.  **Project Setup & Initial Structure:**
-    *   **Agent Command:** `cursor: create-react-native-app --template typescript`
-    *   **Composer Prompt:** "Set up Firebase project configuration for React Native, including `firebase.json`, `google-services.json`, `GoogleService-Info.plist`, and `firebase.ts` initialization. Ensure Firebase Auth and Firestore are configured."
-2.  **Data Model & API Client Generation:**
-    *   **Agent Command:** `cursor: generate-firestore-models --schema-file data_model.json` (assuming a JSON representation of the data model is created first).
-    *   **Composer Prompt:** "Generate a TypeScript API client for the backend contract defined in section 7. Use `axios` or `fetch` and include type definitions for all request/response bodies. Ensure authentication headers are handled."
-3.  **Feature Implementation (Iterative):**
-    *   For each core feature (e.g., User Food Preference Matching, Meal Request Creation):
-        *   **Composer Prompt:** "Implement the `[Feature Name]` feature. This involves creating the `[Screen Name]` component (e.g., `FoodPreferenceSelectionScreen.tsx`), integrating with the `[API Endpoint]` (e.g., `PUT /users/me` for food preferences), and updating the `User` data model. Pay close attention to the `deep_navy` theme and user experience."
-        *   **Agent Command:** `cursor: create-react-native-screen --name FoodPreferenceSelectionScreen --route /onboarding/food-preferences`
-        *   **Agent Command:** `cursor: create-react-native-component --name FoodPreferencePicker --props foodItems:FoodItem[], selectedIds:string[], onSelect:(id:string)=>void`
-4.  **Authentication Flow:**
-    *   **Composer Prompt:** "Implement the Google OAuth login flow using Firebase Authentication. Create a `LoginScreen.tsx` and integrate with `POST /auth/signup` and `POST /auth/login`. Handle user session management and redirection after successful login."
-5.  **UI/UX & Styling:**
-    *   **Composer Prompt:** "Apply the `deep_navy` theme consistently across all screens. Use React Native's `StyleSheet` or a styling library. Ensure responsive design for various mobile devices."
-6.  **AdMob Integration:**
-    *   **Composer Prompt:** "Integrate Google AdMob SDK. Create a `BannerAdComponent.tsx` and place it on the `HomeScreen.tsx` as specified in the monetization section. Ensure ad unit IDs are loaded from environment variables."
-7.  **Testing & Refinement:**
-    *   **Composer Prompt:** "Write unit and integration tests for the `[Feature Name]` feature, covering the acceptance criteria in section 11. Use `jest` and `react-native-testing-library`."
-    *   **Agent Command:** `cursor: refactor-code --goal "Improve readability and adherence to ESLint rules"`
-8.  **Custom Cursor Rules (`.cursor/rules/*.mdc`):**
-    *   A rule will be created to enforce snake_case for backend API fields and camelCase for frontend state variables.
-    *   Another rule will ensure all sensitive API keys/secrets are referenced via environment variables, not hardcoded.
-    *   A rule to check for consistent `deep_navy` theme usage.
 
-## 13. Do NOT (AI forbidden rules)
+## 13. Design / references
 
-*   Do not arbitrarily add features, screens, or APIs that are not explicitly defined in this PRD.
-*   Do not present unverified figures, dates, or forecasts as facts.
-*   Do not implement production deployment or service domain connections without explicit requests.
-*   Do not hardcode API keys, secrets, or PG keys in the code; reference them only through environment variables (`.env`).
-*   Do not use any third-party libraries or services not mentioned in this document without explicit approval.
-*   Do not implement complex real-time features (e.g., live location
+- UI theme: Deep Navy — trustworthy navy palette
+- Tone: -
+- Reference apps: -
+- Coding IDE: Cursor

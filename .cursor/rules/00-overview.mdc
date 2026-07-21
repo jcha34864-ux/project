@@ -1,23 +1,27 @@
-## Mission
-*   Match people who don't want to eat alone to eat together.
+---
+description: Project overview and the single source of truth pointer. Always applied.
+alwaysApply: true
+---
 
-## North-star metric
-*   Achieve 30%+ 7-day retention rate.
+# 혼자밥먹는 사람을 위한 밥 같이 먹기 — Overview
 
-## Killer differentiator
-*   Match users based on their food preferences.
+- **One-liner**: 혼자 밥 먹기 싫은 사람들이 같이 모여서 밥을 먹는 밥먹을 사람을 매칭해주는 시스템
+- **Device target**: Mobile app (iOS / Android)
+- **Device detail (user wording)**: 모바일 앱
 
-## Primary personas
-*   People who eat alone.
-*   People looking for a meal buddy.
+## Source of truth
 
-## Top user journeys
-*   **Onboarding & Preference Setting**:
-    *   User signs up or logs in.
-    *   User selects their food preferences from a list.
-    *   User creates their profile.
-*   **Finding a Meal Buddy**:
-    *   User views potential meal buddies matched by food preferences.
-    *   User initiates a connection or accepts a match.
-*   **Arranging a Meal**:
-    *   Users communicate to plan a meal together.
+`docs/PRD.md` is the **single source of truth**. Any code edit that diverges
+from the PRD MUST be reflected back to `docs/PRD.md` in the same commit.
+
+## AI team package (read first)
+
+Before planning or coding, read **`.cubivora/TEAM.md`** (team overview + **Project Persona**)
+and **`.cubivora/Memory.md`** (Why-Decision Log). These are **project-specific**
+long-term memory — highest priority over generic assumptions.
+
+## Companion rule files
+
+- `01-architecture.mdc` — folder structure & module boundaries
+- `02-stack.mdc` — runtime stack and conventions
+- `03-do-not.mdc` — hard prohibitions (read before writing code)
