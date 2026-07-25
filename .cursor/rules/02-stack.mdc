@@ -1,28 +1,6 @@
----
-description: Runtime stack, integrations and monetization context for 혼자밥먹는 사람을 위한 밥 같이 먹기.
-globs: ["src/**", "app/**", "backend/**", "frontend/**"]
-alwaysApply: false
----
+## Stack at a glance
 
-# Stack & Integrations
-
-## Stack
-- **Frontend**: `react_native`
-- **Backend**: `firebase_functions`
-- **Database**: `firestore`
-- **Deployment**: Firebase App Distribution + Firebase Functions
-
-## External integrations
-- **MCP / external services**: enabled — 앱 광고 (AdMob).
-
-## Monetization context
-- **Model**: Ad-supported
-- needs_ads: True
-- needs_payment: False
-- analytics_tracking: False
-
-## Rules
-- All secrets MUST be referenced by env variable **name** only (defined in PRD §9).
-  Never inline an actual key, token, password, or URL with credentials.
-- When adding a dependency, declare it in the manifest file of the chosen stack
-  (`package.json`, `pyproject.toml`, etc.) — do not use system-wide installs.
+| layer                       | choice              | conservative version pin hint |
+| :-------------------------- | :------------------ | :---------------------------- |
+| Frontend                    | Next.js             | `^14.x.x`                     |
+| Backend                     | Node.js             | `^20.x.

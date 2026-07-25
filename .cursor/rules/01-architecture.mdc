@@ -1,32 +1,49 @@
----
-description: Folder structure, routing and module boundaries for 혼자밥먹는 사람을 위한 밥 같이 먹기.
-alwaysApply: false
----
+## Folder tree (recommended)
 
-# Architecture
+```text
+.
+├── frontend
+│   ├── components
+│   ├── pages
+│   │   ├── api
+│   │   └── screen-04861c
+│   ├── public
+│   └── styles
+├── backend
+│   ├── controllers
+│   ├── models
+│   ├── routes
+│   └── services
+├── database
+│   ├── migrations
+│   └── seeds
+└── deployment
+    ├── vercel.json
+    └── scripts
+```
 
-## Stack
-- **Frontend**: `react_native`
-- **Backend**: `firebase_functions`
-- **Database**: `firestore`
-- **Deployment**: Firebase App Distribution + Firebase Functions
+## Module boundaries
 
-## Routing / Pages
+- **Frontend**: Handle UI components, page routing, and static assets.
+- **Backend**: Manage API endpoints, business logic, and data models.
+- **Database**: Structure and seed the PostgreSQL database.
+- **Deployment**: Configuration and scripts for Vercel deployment.
 
-| Route | Page | Purpose |
-|-------|------|---------|
-| `/screen-1f6665` | 밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으 — 사용자 프로필 카드형 | 밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으 기능의 화면 레이아웃 (사용자 프로필 카드형) |
+## Data flow (ascii)
 
-## Per-feature page notes
+```text
+[Frontend] --(HTTP)--> [Backend] --(SQL)--> [Database]
+```
 
-- **밥 같이 먹을 사람을 매칭하려면 두 사람의 음식 취향이 비슷한지를 알아야해서 앱 가입하면 자신이 좋아하는 음식을 고르게 하고 그 데이터를 기반으**
-  - 사용자 프로필 카드형
-- **실제 사용자 매칭 및 채팅 기능 추가**
-  - /screen-1f6665
+## Naming conventions
 
-## Entities (data model)
+- **Folders/Files**: kebab-case (e.g., `screen-04861c`)
+- **Variables/Functions**: camelCase (e.g., `getUserData`)
+- **Classes/Components**: PascalCase (e.g., `UserProfile`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `MAX_BUDGET`)
 
-- **사용자**
-- **사용자의 음식 취향**
+## Cross-cutting concerns (logging, error handling, i18n)
 
-> Detailed field-level schema lives in PRD §6. Do not invent fields outside that section.
+- **Logging**: Use a centralized logging service for both frontend and backend. Ensure logs capture errors and user actions.
+- **Error Handling**: Implement global error handlers in both frontend and backend. Display user-friendly error messages.
+- **i18n**: Prepare for internationalization by externalizing strings. Use `"label" ("원문")` format for Korean strings.

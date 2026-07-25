@@ -1,27 +1,38 @@
----
-description: Project overview and the single source of truth pointer. Always applied.
-alwaysApply: true
----
+## Mission
+- Help budget-conscious people find the cheapest nearby restaurants quickly.
+- Surface price comparisons for surrounding restaurants in a single, frictionless web experience.
+- Reduce food spending for solo households by making cost-aware dining decisions effortless.
 
-# 혼자밥먹는 사람을 위한 밥 같이 먹기 — Overview
+## North-star metric
+- Average session duration ≥ 5 minutes per user visit.
+- (Acceptance criterion: `manual-1` — user engages with core features for 5 min+.)
 
-- **One-liner**: 혼자 밥 먹기 싫은 사람들이 같이 모여서 밥을 먹는 밥먹을 사람을 매칭해주는 시스템
-- **Device target**: Mobile app (iOS / Android)
-- **Device detail (user wording)**: 모바일 앱
+## Killer differentiator
+- **Location-based budget filtering** — users set a price range and instantly see only nearby restaurants that fit, ranked by cost.
+- No comparable tool combines hyper-local proximity with granular budget filters in a single list view.
 
-## Source of truth
+## Primary personas
 
-`docs/PRD.md` is the **single source of truth**. Any code edit that diverges
-from the PRD MUST be reflected back to `docs/PRD.md` in the same commit.
+- **가성비 소비자 ("Value Seeker")** — single-person household (`1인 가구`) who wants to change spending habits.
+  - Motivation: curiosity-driven; browses to discover cheaper options they didn't know existed.
+  - Behaviour: explores price comparisons before deciding where to eat; sensitive to small price differences.
+  - Auth: no login required — zero friction to first value.
+  - Monetisation tolerance: accepts ads in exchange for a free service.
 
-## AI team package (read first)
+<!-- TBD: secondary personas not specified in profile -->
 
-Before planning or coding, read **`.cubivora/TEAM.md`** (team overview + **Project Persona**)
-and **`.cubivora/Memory.md`** (Why-Decision Log). These are **project-specific**
-long-term memory — highest priority over generic assumptions.
+## Top user journeys
 
-## Companion rule files
+1. **Discover cheap nearby restaurants**
+   - Land on app → grant/enter location → browse restaurant list sorted by price → click a result to learn more.
 
-- `01-architecture.mdc` — folder structure & module boundaries
-- `02-stack.mdc` — runtime stack and conventions
-- `03-do-not.mdc` — hard prohibitions (read before writing code)
+2. **Filter by budget range** (`feat-04861c`)
+   - Open "예산 범위 필터" ("Budget Range Filter") on `/screen-04861c` → select min/max price via list-style filter → list refreshes to show only matching restaurants → user saves or revisits filter history ("필터 기록").
+
+3. **Compare prices across options**
+   - View filtered list → compare multiple restaurants side-by-side in list layout → choose the lowest-cost option.
+
+4. **Return visit / repeat filtering**
+   - Re-open app → previous filter record ("필터 기록") is recalled → one-tap re-apply → updated nearby results shown instantly.
+
+<!-- TBD: onboarding journey not yet specified -->

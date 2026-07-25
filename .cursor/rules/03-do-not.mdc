@@ -1,22 +1,38 @@
----
-description: Hard prohibitions for 혼자밥먹는 사람을 위한 밥 같이 먹기. Always applied.
-alwaysApply: true
----
+## Product-specific anti-patterns
 
-# Do NOT
+- Do not display or log a user's personal budget range in server-side logs or error messages.
+- Do not expose `user_id` as a plain query parameter in URLs (e.g., `/restaurants?user_id=123`); use session context instead.
+- Do not render restaurant price data that has not been validated against the location API response — do not fabricate or hard-code price values.
+- Do not apply a budget filter silently without reflecting the active filter state visibly in the "예산 범위 필터" ("리스트형 필터") UI.
+- Do not persist filter history ("필터 기록") to a remote store without explicit user consent flow.
+- Do not cache location coordinates beyond the current session without a documented retention policy.
+- Do not call the restaurant location API (MCP) more than once per user-initiated filter action — do not poll in the background.
+- Do not show ad units inside the budget filter list view in a way that obscures price comparison results.
+- Do not pre-populate the budget range filter with values inferred from prior sessions unless the user has explicitly saved a preference.
+- Do not surface restaurant data outside the user's current geolocation radius without a clear UI disclosure.
+- Do not add screens, routes, or API endpoints beyond those declared in the PRD (e.g., do not create a `/restaurants/:id/reviews` page that is not scoped).
+- Do not implement payment flows — `monetization.needs_payment` is `false`; the model is ads-only.
+- Do not add OAuth or social login — `auth.required` is `false` and `auth.methods` is `["none"]`.
 
-The following rules are non-negotiable. If a user request appears to conflict
-with them, stop and ask before proceeding.
+## Universal guardrails
 
-- 요구사항에 없는 기능·화면·API를 임의로 추가하지 않는다.
-- 확인되지 않은 수치·날짜·전망을 사실처럼 쓰지 않는다.
-- 프로덕션 배포·실서비스 도메인 연결은 명시적 요청 없이 구현하지 않는다.
-- API 키·시크릿·PG 키는 코드에 하드코딩하지 않고 환경변수(.env)로만 참조한다.
+- Do not invent features, screens, or API endpoints that are not in `docs/PRD.md`.
+- Do not silently change the folder structure declared in `01-architecture.mdc`.
+- Do not introduce a new `npm` / `pip` / system dependency without updating PRD §10 (Tech Stack) in the same commit.
+- Do not mix Korean into source code identifiers, code comments, or generated technical documentation except for user-facing copy explicitly declared as `ko` in the PRD.
+- Do not assert unverified metrics, dates, or projections as facts in any generated content.
+- Do not trigger a production deployment or connect a live service domain without an explicit user request.
+- Do not silently alter database schema (PostgreSQL migrations) without a corresponding migration file and changelog entry.
+- Do not disable or bypass TypeScript strict-mode checks to suppress errors.
+- Do not commit `console.log` statements that output request bodies or response payloads in production code paths.
+- Do not generate code that targets environments other than the declared target (`web_app` / 웹 브라우저 / Vercel + Next.js + Node).
 
-## Universal guardrails (always)
-- Do **not** invent features, screens, or API endpoints that are not in `docs/PRD.md`.
-- Do **not** silently change folder structure declared in `01-architecture.mdc`.
-- Do **not** introduce a new dependency without updating PRD §10 (Tech Stack)
-  in the same commit.
-- Do **not** mix Korean into source code, code comments, or generated documentation
-  except for user-facing copy that is explicitly declared as `ko` in the PRD.
+## Secrets & PII
+
+- Do not hard-code API keys, secrets, or any credentials in source files — reference them exclusively via environment variables defined in `.env` (and `.env.example` with placeholder values).
+- Do not log, print, or include in error responses any value from the following fields: `email`, `password`, `token`, or location coordinates.
+- Do not store raw geolocation data (latitude/longitude) in the `사용자` entity or any database table without explicit PRD approval and a documented retention policy.
+- Do not expose the internal `사용자.id` (primary key) in client-facing URLs or API response envelopes where it can be enumerated.
+- Do not transmit budget range values or filter history to third-party ad networks — ad integration must receive only non-PII contextual signals.
+- Do not include real user data in test fixtures, seeds, or example files — use synthetic data only.
+- Do not commit `.env` files containing real secrets; `.env` must be listed in `.gitignore` at project root.
