@@ -1,49 +1,31 @@
-## Folder tree (recommended)
+---
+description: Folder structure, routing and module boundaries for 고양이 사진 찍으면 고양이 종 알려주는 앱.
+alwaysApply: false
+---
 
-```text
-.
-├── frontend
-│   ├── components
-│   ├── pages
-│   │   ├── api
-│   │   └── screen-04861c
-│   ├── public
-│   └── styles
-├── backend
-│   ├── controllers
-│   ├── models
-│   ├── routes
-│   └── services
-├── database
-│   ├── migrations
-│   └── seeds
-└── deployment
-    ├── vercel.json
-    └── scripts
-```
+# Architecture
 
-## Module boundaries
+## Stack
+- **Frontend**: `next`
+- **Backend**: `next_api_routes`
+- **Database**: `postgresql`
+- **Deployment**: Vercel
 
-- **Frontend**: Handle UI components, page routing, and static assets.
-- **Backend**: Manage API endpoints, business logic, and data models.
-- **Database**: Structure and seed the PostgreSQL database.
-- **Deployment**: Configuration and scripts for Vercel deployment.
+## Routing / Pages
 
-## Data flow (ascii)
+| Route | Page | Purpose |
+|-------|------|---------|
+| `/screen` | 갤러리 그리드형 | 갤러리 그리드형 |
 
-```text
-[Frontend] --(HTTP)--> [Backend] --(SQL)--> [Database]
-```
+## Per-feature page notes
 
-## Naming conventions
+_(no per-feature page notes)_
 
-- **Folders/Files**: kebab-case (e.g., `screen-04861c`)
-- **Variables/Functions**: camelCase (e.g., `getUserData`)
-- **Classes/Components**: PascalCase (e.g., `UserProfile`)
-- **Constants**: UPPER_SNAKE_CASE (e.g., `MAX_BUDGET`)
+## Entities (data model)
 
-## Cross-cutting concerns (logging, error handling, i18n)
+- **고양이 사진**
+- **품종 판정**
+- **품종 도감**
+- **촬영 위치**
 
-- **Logging**: Use a centralized logging service for both frontend and backend. Ensure logs capture errors and user actions.
-- **Error Handling**: Implement global error handlers in both frontend and backend. Display user-friendly error messages.
-- **i18n**: Prepare for internationalization by externalizing strings. Use `"label" ("원문")` format for Korean strings.
+> Detailed field-level schema lives in PRD §6. Do not invent fields outside that section.

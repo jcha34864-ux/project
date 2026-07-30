@@ -1,38 +1,35 @@
 ## Mission
-- Help budget-conscious people find the cheapest nearby restaurants quickly.
-- Surface price comparisons for surrounding restaurants in a single, frictionless web experience.
-- Reduce food spending for solo households by making cost-aware dining decisions effortless.
+- Build a mobile-web app that identifies a cat's breed from a photo taken or uploaded by the user.
+- Deliver instant, meaningful breed information with zero app installation required.
+- Handle low-quality or non-cat images gracefully without errors.
 
 ## North-star metric
-- Average session duration ≥ 5 minutes per user visit.
-- (Acceptance criterion: `manual-1` — user engages with core features for 5 min+.)
+- Breed identification accuracy ≥ 80 % on real-world street-cat photos (see acceptance criterion `manual-1`).
 
 ## Killer differentiator
-- **Location-based budget filtering** — users set a price range and instantly see only nearby restaurants that fit, ranked by cost.
-- No comparable tool combines hyper-local proximity with granular budget filters in a single list view.
+- Zero-friction, install-free mobile web experience — open browser, snap or upload, get breed info in seconds.
+- Powered by Gemini vision AI for breed classification + Google Maps for capture-location context.
 
 ## Primary personas
 
-- **가성비 소비자 ("Value Seeker")** — single-person household (`1인 가구`) who wants to change spending habits.
-  - Motivation: curiosity-driven; browses to discover cheaper options they didn't know existed.
-  - Behaviour: explores price comparisons before deciding where to eat; sensitive to small price differences.
-  - Auth: no login required — zero friction to first value.
-  - Monetisation tolerance: accepts ads in exchange for a free service.
-
-<!-- TBD: secondary personas not specified in profile -->
+| Persona | Description | Core need |
+|---|---|---|
+| Cat Lover | Actively interested in cats; wants to know the breed of every cat they encounter | Accurate breed name + rich breed description |
+| Curious Passerby | Downloaded on impulse after seeing a cute street cat | Fast, delightful result with no learning curve |
 
 ## Top user journeys
 
-1. **Discover cheap nearby restaurants**
-   - Land on app → grant/enter location → browse restaurant list sorted by price → click a result to learn more.
+1. **Snap & Identify**
+   - User opens the app in a mobile browser → taps camera button → takes a photo of a street cat → sees a loading indicator → receives breed name + description within a few seconds.
 
-2. **Filter by budget range** (`feat-04861c`)
-   - Open "예산 범위 필터" ("Budget Range Filter") on `/screen-04861c` → select min/max price via list-style filter → list refreshes to show only matching restaurants → user saves or revisits filter history ("필터 기록").
+2. **Upload & Identify**
+   - User opens the app → selects an existing cat photo from the gallery → triggers analysis → receives breed result or a clear "no cat detected" message.
 
-3. **Compare prices across options**
-   - View filtered list → compare multiple restaurants side-by-side in list layout → choose the lowest-cost option.
+3. **Read Breed Details**
+   - After identification, user taps the result card → reads breed characteristics and personality traits from the "품종 도감" ("품종 도감") encyclopedia entry.
 
-4. **Return visit / repeat filtering**
-   - Re-open app → previous filter record ("필터 기록") is recalled → one-tap re-apply → updated nearby results shown instantly.
+4. **Error / No Cat Detected**
+   - User uploads a photo without a cat → app displays a friendly guidance message (F1.4) instead of a raw error.
 
-<!-- TBD: onboarding journey not yet specified -->
+5. **Sign-in with Google**
+   - User chooses to sign in via Google OAuth → account is created/linked → past breed judgements (`품종 판정`) are associated with the user's profile.

@@ -1,6 +1,28 @@
-## Stack at a glance
+---
+description: Runtime stack, integrations and monetization context for 고양이 사진 찍으면 고양이 종 알려주는 앱.
+globs: ["src/**", "app/**", "backend/**", "frontend/**"]
+alwaysApply: false
+---
 
-| layer                       | choice              | conservative version pin hint |
-| :-------------------------- | :------------------ | :---------------------------- |
-| Frontend                    | Next.js             | `^14.x.x`                     |
-| Backend                     | Node.js             | `^20.x.
+# Stack & Integrations
+
+## Stack
+- **Frontend**: `next`
+- **Backend**: `next_api_routes`
+- **Database**: `postgresql`
+- **Deployment**: Vercel
+
+## External integrations
+- **MCP / external services**: enabled — 고양이 품종 판정(Gemini), 촬영 위치 지도(Google Maps).
+
+## Monetization context
+- **Model**: Undecided
+- needs_ads: False
+- needs_payment: False
+- analytics_tracking: False
+
+## Rules
+- All secrets MUST be referenced by env variable **name** only (defined in PRD §9).
+  Never inline an actual key, token, password, or URL with credentials.
+- When adding a dependency, declare it in the manifest file of the chosen stack
+  (`package.json`, `pyproject.toml`, etc.) — do not use system-wide installs.
